@@ -1,9 +1,11 @@
 import { useEffect, useState } from "react";
 import Navbar from "../components/Navbar";
 import RateLimitUI from "../components/RateLimitUI";
-import axios from "axios";
 import toast from "react-hot-toast";
 import NoteCard from "../components/NoteCard";
+import api from "../lib/axios";
+import { Link } from "react-router";
+import { NotebookIcon } from "lucide-react";
 
 const HomePage = () => {
   const [isRateLimited, setRateLimited] = useState(false);
@@ -13,7 +15,7 @@ const HomePage = () => {
   useEffect(() => {
     const fetchNotes = async () => {
       try {
-        const res = await axios.get("http://localhost:5001/api/notes");
+        const res = await api.get("/notes");
         console.log(res.data);
         setNotes(res.data);
         setRateLimited(false); 
@@ -43,11 +45,21 @@ const HomePage = () => {
           Loading notes...
         </div> }
 
+        {notes.length === 0 && !isRateLimited && (
+          <div className="flex flex-col items-center justify-center py-16 space-y-6 max-w-md mx-auto text-center">
+            <NotebookIcon className="size-10 text-primary"/>
+            <h2 className="text-2xl font-bold">No Notes yet</h2>
+            <Link to={"/create"} className="btn btn-primary">
+              Create a Note
+            </Link>
+          </div>
+        )}
+
         {notes.length > 0 && !isRateLimited && (
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
             {
               notes.map((note) => (
-                <NoteCard key={note._id} note={note} />
+                <NoteCard key={note._id} note={note} setNotes={setNotes} />
               ))
             }
         </div>
