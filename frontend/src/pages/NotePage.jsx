@@ -18,10 +18,8 @@ const NotePage = () => {
     const fetchNote = async () => {
       try {
         const res = await api.get(`/notes/${id}`);
-        console.log(res.data);
         setNote(res.data);
       } catch (error) {
-        console.log("Error fetching note");
         toast.error("Failed to load note");
       }
       finally{
@@ -39,7 +37,6 @@ const NotePage = () => {
       toast.success("Note deleted successfully");
       navigate("/");
     } catch (error) {
-      console.log("Error in handleDelete NotePage");
       toast.error("Failed to delete note");
     }
   };
@@ -59,7 +56,6 @@ const NotePage = () => {
       navigate("/");
     } catch (error) {
       toast.error("Failed to change note");
-      console.log("Error in handleUpdate",error);
     }finally {
       setSaving(false);
     }

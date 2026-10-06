@@ -17,11 +17,9 @@ const HomePage = () => {
     const fetchNotes = async () => {
       try {
         const res = await api.get("/notes");
-        console.log(res.data);
         setNotes(res.data);
         setRateLimited(false); 
       } catch (error) {
-        console.log("Error fetching notes");
         if (error.response?.status == 429) {
           setRateLimited(true);
         } else {

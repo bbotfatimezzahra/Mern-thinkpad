@@ -30,7 +30,6 @@ const CreatePage = () => {
       else{
         toast.error("Failed to create note")
       }
-      console.log("Error in handlesubmit",error);
     }finally {
       setLoading(false);
     }

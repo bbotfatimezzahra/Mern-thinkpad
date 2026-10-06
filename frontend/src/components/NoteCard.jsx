@@ -22,7 +22,6 @@ const NoteCard = ({ note, setNotes }) => {
             else{
                 toast.error("Failed to delete note")
             }
-            console.log("Error in handleDelete",error);
         }
     };
 
